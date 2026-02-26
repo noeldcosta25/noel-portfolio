@@ -1,4 +1,4 @@
-import { Logo } from "@/components/shared/logo";
+import Image from "next/image";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { DecorIcon, FullWidthDivider } from "@/components/ui/border";
 import { Button } from "@/components/ui/button";
@@ -39,7 +39,11 @@ export function Footer() {
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_auto]">
           <div className="flex flex-col gap-4">
             <Link href="/" aria-label={`${siteConfig.name} — home`}>
-              <Logo size={32} showWordmark aria-hidden="true" />
+              <img
+                src="/logo.png"
+                alt="Noel Logo"
+                className="h-12 w-12 object-contain"
+              />
             </Link>
 
             <TypographyMuted className="max-w-xs text-balance">
