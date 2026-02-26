@@ -63,7 +63,11 @@ export default function ResumePage() {
               role="status"
               aria-label="Loading resume"
             >
-              <LogoLoader aria-hidden="true" />
+              <img
+                src="/logo.png"
+                alt="Loading..."
+                className="h-16 w-16 object-contain animate-pulse"
+              />
             </div>
           }
         >
