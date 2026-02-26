@@ -31,6 +31,27 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+
+  openGraph: {
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.description,
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png", // Make sure this exists in /public
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} — ${siteConfig.role}`,
+    description: siteConfig.description,
+    images: ["/og-image.png"],
+  },
 };
 
 export const viewport: Viewport = {
