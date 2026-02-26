@@ -35,7 +35,7 @@ interface BouncingLogosProps {
 
 export function BouncingLogos({
   count = 6,
-  opacity = "opacity-50",
+  opacity = "opacity-75",
   containerRef,
 }: BouncingLogosProps) {
   const instancesRef = useRef<Instance[]>([]);
