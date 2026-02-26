@@ -18,7 +18,7 @@ export async function GET() {
             headers: {
                 "Content-Type": "application/pdf",
                 "Content-Disposition": "inline",
-                "Cache-Control": "public, max-age=3600",
+                "Cache-Control": "no-store",
                 ...(contentLength && { "Content-Length": contentLength }),
                 ...(etag && { ETag: etag }),
                 ...(lastModified && { "Last-Modified": lastModified }),
