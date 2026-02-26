@@ -30,7 +30,7 @@ export default function NotFound() {
       <Empty className="z-10 backdrop-blur-sm" role="status" aria-live="polite">
         <EmptyHeader>
           <FlickerText
-            chars={["4", "logo", "4"]}
+            chars={["4", "0", "4"]}
             charWidth={96}
             className="text-foreground"
             aria-label="404"
