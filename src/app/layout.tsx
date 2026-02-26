@@ -108,9 +108,8 @@ export default function Layout({
             </PageLayout>
           </NuqsAdapter>
         </RootProvider>
-
-        <MouseGlow />
-      </body>
-    </html>
+      <MouseGlow />
+    </body>
+  </html>
   );
 }
