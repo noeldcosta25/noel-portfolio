@@ -26,13 +26,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: `${siteConfig.name} — ${siteConfig.role}`,
-    template: `%s — ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
   metadataBase: new URL(siteConfig.baseUrl),
 
+  title: {
+    default: ${siteConfig.name} — ${siteConfig.role},
+    template: %s — ${siteConfig.name},
+  },
+
+  description: siteConfig.description,
+
+  openGraph: {
+    title: ${siteConfig.name} — ${siteConfig.role},
+    description: siteConfig.description,
+    url: siteConfig.baseUrl,
+    siteName: siteConfig.name,
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png", // Make sure this exists in /public
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: ${siteConfig.name} — ${siteConfig.role},
+    description: siteConfig.description,
+    images: ["/og-image.png"],
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export const viewport: Viewport = {
@@ -42,14 +70,17 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function Layout({ children }: LayoutProps<"/">) {
+export default function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.className} ${geistMono.className} antialiased`}
+      className={${plusJakartaSans.className} ${geistMono.className} antialiased}
       suppressHydrationWarning
     >
-      <head></head>
       <body className="relative flex flex-col min-h-screen">
         {process.env.NODE_ENV === "production" && (
           <Script
@@ -59,8 +90,10 @@ export default function Layout({ children }: LayoutProps<"/">) {
             strategy="afterInteractive"
           />
         )}
+
         <JsonLd type="person" />
         <JsonLd type="website" />
+
         <RootProvider>
           <NuqsAdapter>
             <PageLayout>
@@ -75,6 +108,7 @@ export default function Layout({ children }: LayoutProps<"/">) {
             </PageLayout>
           </NuqsAdapter>
         </RootProvider>
+
         <MouseGlow />
       </body>
     </html>
