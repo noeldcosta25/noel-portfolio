@@ -31,8 +31,6 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  metadataBase: new URL(siteConfig.baseUrl),
-
 };
 
 export const viewport: Viewport = {
@@ -42,14 +40,17 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function Layout({ children }: LayoutProps<"/">) {
+export default function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
       className={`${plusJakartaSans.className} ${geistMono.className} antialiased`}
       suppressHydrationWarning
     >
-      <head></head>
       <body className="relative flex flex-col min-h-screen">
         {process.env.NODE_ENV === "production" && (
           <Script
@@ -59,8 +60,10 @@ export default function Layout({ children }: LayoutProps<"/">) {
             strategy="afterInteractive"
           />
         )}
+
         <JsonLd type="person" />
         <JsonLd type="website" />
+
         <RootProvider>
           <NuqsAdapter>
             <PageLayout>
