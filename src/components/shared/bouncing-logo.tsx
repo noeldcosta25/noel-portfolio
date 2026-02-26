@@ -1,10 +1,9 @@
 "use client";
 
-import { Logo } from "@/components/shared/logo";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-const LOGO_SIZE = 40;
-const LOGO_W = Math.round(((64 - 14) / 64) * LOGO_SIZE);
+const LOGO_SIZE = 60;
 
 type Instance = {
   x: number;
@@ -18,7 +17,7 @@ type Instance = {
 
 function makeInstances(count: number): Instance[] {
   return Array.from({ length: count }).map(() => ({
-    x: Math.random() * (window.innerWidth - LOGO_W),
+    x: Math.random() * (window.innerWidth - LOGO_SIZE),
     y: Math.random() * (window.innerHeight - LOGO_SIZE),
     vx: (Math.random() < 0.5 ? 1 : -1) * (0.8 + Math.random() * 0.8),
     vy: (Math.random() < 0.5 ? 1 : -1) * (0.8 + Math.random() * 0.8),
@@ -36,7 +35,7 @@ interface BouncingLogosProps {
 
 export function BouncingLogos({
   count = 6,
-  opacity = "opacity-[0.06]",
+  opacity = "opacity-[0.08]",
   containerRef,
 }: BouncingLogosProps) {
   const instancesRef = useRef<Instance[]>([]);
@@ -50,14 +49,8 @@ export function BouncingLogos({
     const container = containerRef.current;
     if (!container) return;
 
-    for (const inst of instancesRef.current) {
-      if (inst.el) {
-        inst.el.style.transform = `translate3d(${inst.x}px, ${inst.y}px, 0) rotate(${inst.rotation}deg)`;
-      }
-    }
-
     const tick = () => {
-      const maxX = container.clientWidth - LOGO_W;
+      const maxX = container.clientWidth - LOGO_SIZE;
       const maxY = container.clientHeight - LOGO_SIZE;
 
       for (const inst of instancesRef.current) {
@@ -103,17 +96,17 @@ export function BouncingLogos({
             const inst = instancesRef.current[i];
             if (!inst) return;
             inst.el = el;
-            if (el) {
-              el.style.transform = `translate3d(${inst.x}px, ${inst.y}px, 0) rotate(${inst.rotation}deg)`;
-            }
           }}
           className={`pointer-events-none absolute ${opacity}`}
           style={{ willChange: "transform", top: 0, left: 0 }}
         >
-          <Logo
-            size={LOGO_SIZE}
-            className="text-foreground"
-            aria-hidden="true"
+          <Image
+            src="logo.png" // 🔥 replace with your file name
+            alt="Noel Logo"
+            width={LOGO_SIZE}
+            height={LOGO_SIZE}
+            className="grayscale"
+            priority={false}
           />
         </div>
       ))}
