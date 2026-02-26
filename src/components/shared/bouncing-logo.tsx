@@ -35,7 +35,7 @@ interface BouncingLogosProps {
 
 export function BouncingLogos({
   count = 6,
-  opacity = "opacity-[0.08]",
+  opacity = "opacity-50",
   containerRef,
 }: BouncingLogosProps) {
   const instancesRef = useRef<Instance[]>([]);
@@ -105,7 +105,7 @@ export function BouncingLogos({
             alt="Noel Logo"
             width={LOGO_SIZE}
             height={LOGO_SIZE}
-            className="grayscale"
+            className=""
             priority={false}
           />
         </div>
