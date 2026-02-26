@@ -3,6 +3,7 @@ import { fetchResume } from "@/lib/resume";
 
 export async function GET() {
     try {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         const res = await fetchResume();
 
         if (!res.body) {
