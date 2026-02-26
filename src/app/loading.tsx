@@ -1,7 +1,5 @@
 "use client";
 
-import { LogoLoader } from "@/components/shared/loader";
-
 export default function Loading() {
   return (
     <div
@@ -10,7 +8,11 @@ export default function Loading() {
       aria-label="Loading"
       aria-live="polite"
     >
-      <LogoLoader className="text-foreground" />
+      <img
+        src="/logo.png"
+        alt="Loading..."
+        className="h-20 w-20 object-contain animate-pulse"
+      />
     </div>
   );
 }
