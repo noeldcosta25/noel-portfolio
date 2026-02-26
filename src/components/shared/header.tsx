@@ -1,6 +1,6 @@
 "use client";
 
-import { Logo } from "@/components/shared/logo";
+
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { DecorIcon } from "@/components/ui/border";
 import { Button } from "@/components/ui/button";
@@ -55,16 +55,10 @@ export function Header() {
           aria-label={`${siteConfig.name} — home`}
           className="cursor-pointer"
         >
-          <Logo
-            size={32}
-            className="sm:hidden cursor-pointer"
-            aria-hidden="true"
-          />
-          <Logo
-            size={32}
-            showWordmark
-            className="hidden sm:inline-flex"
-            aria-hidden="true"
+          <img
+            src="/logo.png"
+            alt="Noel Logo"
+            className="h-12 w-12 object-contain"
           />
         </Link>
 
