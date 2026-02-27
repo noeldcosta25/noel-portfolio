@@ -1,13 +1,9 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 
 export const dynamic = "force-dynamic";
 
 const USERNAME = "noeldcosta";
 const API_KEY = process.env.LASTFM_API_KEY!;
-
-const filePath = path.join(process.cwd(), "last-track.json");
 
 export async function GET() {
   try {
@@ -36,31 +32,13 @@ export async function GET() {
       `${artist} ${title}`
     )}`;
 
-    // Currently playing tracks DO NOT have a date field
     const isPlaying = !current.date;
 
-    const trackData = { title, artist, spotifyUrl };
-
-    if (isPlaying) {
-      fs.writeFileSync(filePath, JSON.stringify(trackData));
-      return NextResponse.json({
-        isPlaying: true,
-        ...trackData,
-      });
-    }
-
-    // If paused, read last saved playing track
-    if (fs.existsSync(filePath)) {
-      const saved = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-      return NextResponse.json({
-        isPlaying: false,
-        ...saved,
-      });
-    }
-
     return NextResponse.json({
-      isPlaying: false,
-      ...trackData,
+      isPlaying,
+      title,
+      artist,
+      spotifyUrl,
     });
   } catch {
     return NextResponse.json({ isPlaying: false });
