@@ -17,29 +17,25 @@ export function NowPlaying() {
     const fetchData = async () => {
       try {
         const res = await fetch("/api/now-playing", {
-          cache: "no-store", // prevent production caching
+          cache: "no-store",
         });
 
         const json = await res.json();
 
-        // Only update state if valid data exists
-        if (json && json.title) {
+        if (json.title) {
           setData(json);
         }
-      } catch (error) {
-        // Do NOT reset state on error
-        // Keep previous song visible
-        console.error("NowPlaying fetch error:", error);
+      } catch (err) {
+        console.error("NowPlaying fetch failed:", err);
       }
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 15000); // refresh every 15s
+    const interval = setInterval(fetchData, 10000); // 10s polling
 
     return () => clearInterval(interval);
   }, []);
 
-  // If no valid data yet, show nothing
   if (!data || !data.title) return null;
 
   return (
