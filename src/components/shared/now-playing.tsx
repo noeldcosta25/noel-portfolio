@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { SpotifyIcon } from "@/components/shared/SpotifyIcon";
 
 type NowPlayingData = {
@@ -12,6 +12,8 @@ type NowPlayingData = {
 
 export function NowPlaying() {
   const [data, setData] = useState<NowPlayingData | null>(null);
+  const lastTrackRef = useRef<NowPlayingData | null>(null);
+  const lastUpdateRef = useRef<number>(Date.now());
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,16 +24,28 @@ export function NowPlaying() {
 
         const json = await res.json();
 
-        if (json.title) {
-          setData(json);
+        if (!json.title) return;
+
+        // If we suddenly get an older track very quickly,
+        // ignore it for 15 seconds (stability window)
+        if (
+          lastTrackRef.current &&
+          json.title !== lastTrackRef.current.title &&
+          Date.now() - lastUpdateRef.current < 15000
+        ) {
+          return;
         }
-      } catch (err) {
-        console.error("NowPlaying fetch failed:", err);
+
+        lastTrackRef.current = json;
+        lastUpdateRef.current = Date.now();
+        setData(json);
+      } catch {
+        // ignore errors
       }
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 10000); // 10s polling
+    const interval = setInterval(fetchData, 8000);
 
     return () => clearInterval(interval);
   }, []);
