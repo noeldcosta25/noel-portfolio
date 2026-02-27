@@ -23,7 +23,7 @@ export async function GET() {
       tracks = [tracks];
     }
 
-    // Detect currently playing
+    // Find currently playing
     const currentlyPlaying = tracks.find(
       (track: any) => track["@attr"]?.nowplaying === "true"
     );
@@ -33,7 +33,7 @@ export async function GET() {
     if (currentlyPlaying) {
       trackToShow = currentlyPlaying;
     } else {
-      // Get most recent completed track (must have date)
+      // Find most recent completed track
       trackToShow = tracks.find((track: any) => track.date);
     }
 
@@ -48,10 +48,8 @@ export async function GET() {
       `${artist} ${title}`
     )}`;
 
-    const isPlaying = Boolean(currentlyPlaying);
-
     return NextResponse.json({
-      isPlaying,
+      isPlaying: Boolean(currentlyPlaying),
       title,
       artist,
       spotifyUrl,
