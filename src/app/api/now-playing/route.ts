@@ -23,12 +23,23 @@ export async function GET() {
       tracks = [tracks];
     }
 
-    const current = tracks[0];
-    const isPlaying = !current.date;
+    // Detect currently playing
+    const currentlyPlaying = tracks.find(
+      (track: any) => track["@attr"]?.nowplaying === "true"
+    );
 
-    const trackToShow = isPlaying
-      ? current
-      : tracks[0]; // show most recent finished track
+    let trackToShow;
+
+    if (currentlyPlaying) {
+      trackToShow = currentlyPlaying;
+    } else {
+      // Get most recent completed track (must have date)
+      trackToShow = tracks.find((track: any) => track.date);
+    }
+
+    if (!trackToShow) {
+      return NextResponse.json({ isPlaying: false });
+    }
 
     const title = trackToShow.name;
     const artist = trackToShow.artist?.["#text"] || "Unknown";
@@ -36,6 +47,8 @@ export async function GET() {
     const spotifyUrl = `https://open.spotify.com/search/${encodeURIComponent(
       `${artist} ${title}`
     )}`;
+
+    const isPlaying = Boolean(currentlyPlaying);
 
     return NextResponse.json({
       isPlaying,
