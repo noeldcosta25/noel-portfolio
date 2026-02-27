@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { NowPlaying } from "@/components/shared/now-playing";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { DecorIcon, FullWidthDivider } from "@/components/ui/border";
 import { Button } from "@/components/ui/button";
@@ -21,10 +22,7 @@ const platformIcons: Record<
   discord: <IconBrandDiscordFilled aria-hidden="true" />,
 };
 
-const footerNav = [
-  ...siteConfig.nav,
-// Privacy removed
-];
+const footerNav = [...siteConfig.nav];
 
 export function Footer() {
   return (
@@ -37,8 +35,12 @@ export function Footer() {
         </div>
 
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_auto]">
+          {/* Left Side */}
           <div className="flex flex-col gap-4">
-            <Link href="/" aria-label={`${siteConfig.name} — home`}>
+            <Link
+              href="/"
+              aria-label={`${siteConfig.name} — home`}
+            >
               <img
                 src="/logo.png"
                 alt="Noel Logo"
@@ -50,6 +52,7 @@ export function Footer() {
               {siteConfig.description}
             </TypographyMuted>
 
+            {/* Social Icons */}
             <nav aria-label="Social links" className="flex gap-2">
               {siteConfig.social.map((item) => (
                 <Button
@@ -69,8 +72,12 @@ export function Footer() {
                 </Button>
               ))}
             </nav>
+
+            {/* 🎵 Now Playing */}
+            <NowPlaying />
           </div>
 
+          {/* Right Side */}
           <nav aria-label="Footer navigation" className="flex flex-col gap-2">
             <TypographyMuted
               className="uppercase tracking-widest font-mono mb-1"
