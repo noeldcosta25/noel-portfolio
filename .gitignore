@@ -8,6 +8,7 @@ out/
 # Environment variables
 .env.local
 .env
+.env.*
 
 # Local dev folders
 .source/
