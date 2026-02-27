@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SpotifyIcon } from "@/components/shared/SpotifyIcon"; 
+import { SpotifyIcon } from "@/components/shared/SpotifyIcon";
 
 type NowPlayingData = {
   isPlaying: boolean;
@@ -14,34 +14,40 @@ export function NowPlaying() {
   const [data, setData] = useState<NowPlayingData | null>(null);
 
   useEffect(() => {
-    const fetchNowPlaying = async () => {
+    const fetchData = async () => {
       try {
         const res = await fetch("/api/now-playing", {
-          cache: "no-store",
+          cache: "no-store", // prevent production caching
         });
 
         const json = await res.json();
-        setData(json);
-      } catch {
-        setData(null);
+
+        // Only update state if valid data exists
+        if (json && json.title) {
+          setData(json);
+        }
+      } catch (error) {
+        // Do NOT reset state on error
+        // Keep previous song visible
+        console.error("NowPlaying fetch error:", error);
       }
     };
 
-    fetchNowPlaying();
-
-    const interval = setInterval(fetchNowPlaying, 5000); // poll every 5 sec
+    fetchData();
+    const interval = setInterval(fetchData, 15000); // refresh every 15s
 
     return () => clearInterval(interval);
   }, []);
 
+  // If no valid data yet, show nothing
   if (!data || !data.title) return null;
 
   return (
     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-      <SpotifyIcon className="w-8 h-8 opacity-90 shrink-0" />
+      <SpotifyIcon className="w-8 h-8 shrink-0 opacity-90" />
 
       <span>
-        {data.isPlaying ? "listening to" : "previously played"}
+        {data.isPlaying ? "Listening to" : "Previously played"}
       </span>
 
       <a
