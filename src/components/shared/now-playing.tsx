@@ -14,24 +14,22 @@ export function NowPlaying() {
   const [data, setData] = useState<NowPlayingData | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchNowPlaying = async () => {
       try {
         const res = await fetch("/api/now-playing", {
           cache: "no-store",
         });
 
         const json = await res.json();
-
-        if (json.title) {
-          setData(json);
-        }
-      } catch (err) {
-        console.error("NowPlaying fetch failed:", err);
+        setData(json);
+      } catch {
+        // ignore errors silently
       }
     };
 
-    fetchData();
-    const interval = setInterval(fetchData, 10000); // 10s polling
+    fetchNowPlaying();
+
+    const interval = setInterval(fetchNowPlaying, 5000);
 
     return () => clearInterval(interval);
   }, []);
@@ -43,7 +41,7 @@ export function NowPlaying() {
       <SpotifyIcon className="w-8 h-8 shrink-0 opacity-90" />
 
       <span>
-        {data.isPlaying ? "Listening to" : "Previously played"}
+        {data.isPlaying ? "listening to" : "previously played"}
       </span>
 
       <a
