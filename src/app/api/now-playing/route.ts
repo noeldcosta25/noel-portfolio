@@ -1,37 +1,36 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
-export const revalidate = 0;
 
 const USERNAME = "noeldcosta";
 const API_KEY = process.env.LASTFM_API_KEY!;
 
 export async function GET() {
   try {
-    const response = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`,
-      {
-        cache: "no-store",
-        next: { revalidate: 0 },
-      }
+    const res = await fetch(
+      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=2`,
+      { cache: "no-store" }
     );
 
-    const data = await response.json();
-    const track = data?.recenttracks?.track?.[0];
+    const data = await res.json();
+    const tracks = data?.recenttracks?.track;
 
-    if (!track) {
+    if (!tracks || tracks.length === 0) {
       return NextResponse.json({ isPlaying: false });
     }
 
-    const isPlaying =
-      track["@attr"]?.nowplaying === "true";
+    const list = Array.isArray(tracks) ? tracks : [tracks];
+    const current = list[0];
 
-    const title = track.name;
-    const artist = track.artist?.["#text"] || "Unknown";
+    const title = current.name;
+    const artist = current.artist?.["#text"] || "Unknown";
 
     const spotifyUrl = `https://open.spotify.com/search/${encodeURIComponent(
       `${artist} ${title}`
     )}`;
+
+    const isPlaying =
+      current["@attr"]?.nowplaying === "true";
 
     return NextResponse.json({
       isPlaying,
@@ -39,7 +38,7 @@ export async function GET() {
       artist,
       spotifyUrl,
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ isPlaying: false });
   }
 }
