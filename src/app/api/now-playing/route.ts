@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 const USERNAME = "noeldcosta";
 const API_KEY = process.env.LASTFM_API_KEY!;
@@ -8,53 +9,37 @@ const API_KEY = process.env.LASTFM_API_KEY!;
 export async function GET() {
   try {
     const response = await fetch(
-      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=2`,
-      { cache: "no-store" }
+      `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${USERNAME}&api_key=${API_KEY}&format=json&limit=1`,
+      {
+        cache: "no-store",
+        next: { revalidate: 0 },
+      }
     );
 
     const data = await response.json();
-    let tracks = data?.recenttracks?.track;
+    const track = data?.recenttracks?.track?.[0];
 
-    if (!tracks) {
+    if (!track) {
       return NextResponse.json({ isPlaying: false });
     }
 
-    if (!Array.isArray(tracks)) {
-      tracks = [tracks];
-    }
+    const isPlaying =
+      track["@attr"]?.nowplaying === "true";
 
-    // Find currently playing
-    const currentlyPlaying = tracks.find(
-      (track: any) => track["@attr"]?.nowplaying === "true"
-    );
-
-    let trackToShow;
-
-    if (currentlyPlaying) {
-      trackToShow = currentlyPlaying;
-    } else {
-      // Find most recent completed track
-      trackToShow = tracks.find((track: any) => track.date);
-    }
-
-    if (!trackToShow) {
-      return NextResponse.json({ isPlaying: false });
-    }
-
-    const title = trackToShow.name;
-    const artist = trackToShow.artist?.["#text"] || "Unknown";
+    const title = track.name;
+    const artist = track.artist?.["#text"] || "Unknown";
 
     const spotifyUrl = `https://open.spotify.com/search/${encodeURIComponent(
       `${artist} ${title}`
     )}`;
 
     return NextResponse.json({
-      isPlaying: Boolean(currentlyPlaying),
+      isPlaying,
       title,
       artist,
       spotifyUrl,
     });
-  } catch {
+  } catch (error) {
     return NextResponse.json({ isPlaying: false });
   }
 }
