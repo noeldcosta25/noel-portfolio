@@ -67,7 +67,7 @@ export const projects = [
     {
         title: "Telecom Customer Churn Prediction",
         description:
-            "A Discord bot supporting 600+ programming languages. Slightly over-engineered. Definitely useful. Probably unnecessary.",
+            "Customer churn prediction using machine learning classification models trained on telecom dataset to identify customers likely to leave.",
         highlights: ["Classification", "Feature Engineering", "Python", "Customer Analytics"],
         live: null,
         github: "https://github.com/noeldcosta25/Sentiment-Analysis-NLP",
