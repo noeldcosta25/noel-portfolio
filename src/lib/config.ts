@@ -53,7 +53,7 @@ export const projects = [
         description:
             "Machine learning system predicting survival outcomes in breast cancer patients using structured clinical and diagnostic data.",
         highlights: ["Python", "Random Forest", "Pandas", "PowerBI"],
-        live: "https://breast-cancer-2l0t.onrender.com/",
+        live: "https://breast-cancer-fastapi.vercel.app/",
         github: "https://github.com/noeldcosta25/breast-cancer-survival-prediction",
     },
     {
