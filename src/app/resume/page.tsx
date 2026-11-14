@@ -1,103 +1,35 @@
-import { Section } from "@/components/layouts/page";
-import {
-  TypographyH1,
-  TypographyLead,
-  TypographyMuted,
-  TypographyMark,
-} from "@/components/ui/typography";
-import {
-  PdfViewer,
-  PdfViewerControls,
-  PdfViewerDownload,
-  PdfViewerFilename,
-  PdfViewerFooter,
-  PdfViewerOpen,
-  PdfViewerPagination,
-  PdfViewerReload,
-  PdfViewerToolbar,
-  PdfViewerZoom,
-} from "@/components/ui/pdf-viewer";
+import { PdfViewer } from "@/components/ui/pdf-viewer";
+import { JsonLd } from "@/components/shared/json-ld";
 import { getResumeFilename } from "@/lib/resume";
-import { LogoLoader } from "@/components/shared/loader";
 import { buildMeta } from "@/lib/og";
 import { siteConfig } from "@/lib/config";
 import type { Metadata } from "next";
-import { JsonLd } from "@/components/shared/json-ld";
 
 export const metadata: Metadata = buildMeta({
   title: "Resume",
   pageTitle: "Professional Resume",
-  description: `${siteConfig.name}'s resume — professional experience, projects, and technical expertise. Full-stack engineer building modern web applications.`,
+  description: `${siteConfig.name}'s resume — professional experience, projects, and technical expertise.`,
   path: "home / resume",
   canonicalPath: "/resume",
   type: "profile",
 });
 
 export default function ResumePage() {
-  const filename = getResumeFilename();
-
   return (
     <>
-      <JsonLd
-        type="webpage"
-        title="Resume"
-        description={`${siteConfig.name}'s resume — professional experience, projects, and technical expertise.`}
-        canonicalUrl={`${siteConfig.baseUrl}/resume`}
-      />
-      <Section variant="hero" aria-label="Resume">
-        <TypographyH1>Resume</TypographyH1>
-        <TypographyLead>
-          Professional experience, projects, and{" "}
-          <TypographyMark>technical expertise</TypographyMark>.
-        </TypographyLead>
-      </Section>
-
-      <Section noTopDivider innerPadding="pt-12" aria-label="Resume document">
-        <PdfViewer
-          file="/api/resume"
-          downloadHref="/api/resume/download"
-          aria-label={`Resume PDF: ${filename}`}
-          loader={
-            <div
-              className="flex h-full items-center justify-center"
-              role="status"
-              aria-label="Loading resume"
-            >
-              <img
-                src="/logo.png"
-                alt="Loading..."
-                className="h-16 w-16 object-contain animate-pulse"
-              />
-            </div>
-          }
-        >
-          <PdfViewerToolbar aria-label="PDF viewer controls">
-            <PdfViewerFilename
-              name={filename}
-              aria-label={`File: ${filename}`}
-            />
-            <PdfViewerControls>
-              <PdfViewerPagination aria-label="Page navigation" />
-              <PdfViewerZoom aria-label="Zoom controls" />
-              <PdfViewerReload aria-label="Reload PDF" />
-              <PdfViewerOpen aria-label="Open PDF in new tab" />
-              <PdfViewerDownload
-                label="Download"
-                aria-label="Download resume as PDF"
-              />
-            </PdfViewerControls>
-          </PdfViewerToolbar>
-
-          <PdfViewerFooter>
-            <TypographyMuted
-              className="font-mono text-[11px] tracking-wide"
-              aria-label="File metadata: ETag, Last-Modified, Content-Length"
-            >
-              ETag · Last-Modified · Content-Length
-            </TypographyMuted>
-          </PdfViewerFooter>
-        </PdfViewer>
-      </Section>
+      <JsonLd type="webpage" title="Resume" description={metadata.description ?? "Professional resume"} canonicalUrl={`${siteConfig.baseUrl}/resume`} />
+      <section className="apple-section section-soft pb-16 text-center" aria-labelledby="resume-title">
+        <div className="apple-container">
+          <p className="apple-eyebrow">Experience &amp; expertise</p>
+          <h1 id="resume-title" className="apple-heading">My resume.</h1>
+          <p className="section-description mx-auto">A closer look at my experience, projects,<br className="hidden sm:block" /> and the skills behind my work.</p>
+        </div>
+      </section>
+      <section className="apple-section" aria-label="Resume document">
+        <div className="apple-container">
+          <PdfViewer file="/api/resume" downloadHref="/api/resume/download" name={getResumeFilename()} />
+        </div>
+      </section>
     </>
   );
 }

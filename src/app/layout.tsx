@@ -2,28 +2,14 @@ import { Content, PageLayout } from "@/components/layouts/page";
 import { Footer } from "@/components/shared/footer";
 import { Header } from "@/components/shared/header";
 import { JsonLd } from "@/components/shared/json-ld";
-import { MouseGlow } from "@/components/shared/mouse-glow";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { siteConfig } from "@/lib/config";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Metadata, Viewport } from "next";
-import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./global.css";
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-plus-jakarta-sans",
-});
-
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-geist-mono",
-});
 
 export const metadata: Metadata = {
   title: {
@@ -69,7 +55,7 @@ export default function Layout({
   return (
     <html
       lang="en"
-      className={`${plusJakartaSans.className} ${geistMono.className} antialiased`}
+      className="antialiased"
       suppressHydrationWarning
     >
       <body className="relative flex flex-col min-h-screen">
@@ -85,21 +71,20 @@ export default function Layout({
         <JsonLd type="person" />
         <JsonLd type="website" />
 
-        <RootProvider>
+        <RootProvider theme={{ defaultTheme: "light", enableSystem: true }}>
           <NuqsAdapter>
-            <PageLayout>
-              <Header />
-              <Content className="scroll-smooth">
-                <TooltipProvider>
+            <TooltipProvider>
+              <PageLayout>
+                <Header />
+                <Content id="main-content" className="scroll-smooth">
                   {children}
                   <Toaster />
-                </TooltipProvider>
-              </Content>
-              <Footer />
-            </PageLayout>
+                </Content>
+                <Footer />
+              </PageLayout>
+            </TooltipProvider>
           </NuqsAdapter>
         </RootProvider>
-        <MouseGlow />
       </body>
     </html>
   );

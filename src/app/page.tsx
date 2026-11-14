@@ -1,13 +1,7 @@
-import { Contact } from "@/app/_components/contact";
-import { Ecosystem } from "@/app/_components/ecosystem";
-import { Hero } from "@/app/_components/hero";
-import { BuiltThings } from "@/app/_components/projects";
-import { CurrentlyLearning } from "@/app/_components/currently-learning";
-import { RulesIFollow } from "@/app/_components/rules";
+import { PortfolioHome } from "@/app/_components/portfolio-home";
 import { JsonLd } from "@/components/shared/json-ld";
 import { siteConfig } from "@/lib/config";
 import { buildMeta } from "@/lib/og";
-import { Education } from "./_components/education";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = buildMeta({
@@ -28,12 +22,7 @@ export default function Page() {
         description={siteConfig.description}
         canonicalUrl={`${siteConfig.baseUrl}`}
       />
-      <Hero />
-      <Education/>
-      <CurrentlyLearning />
-      <Ecosystem />
-      <BuiltThings />
-      <Contact />
+      <PortfolioHome />
     </>
   );
 }

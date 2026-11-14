@@ -158,15 +158,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    cursor:
-      url("/cursors/default.cur") 4 4,
-      auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   }
 
   *:where(a, button, [role="button"], .cursor-pointer) {
-    cursor:
-      url("/cursors/pointer.cur") 6 6,
-      pointer !important;
+    cursor: pointer;
   }
 
   /* ─── Scroll-fade keyframes ─── */
@@ -292,4 +288,156 @@ main {
 ::selection {
   background-color: var(--selection-bg);
   color: var(--selection-fg);
+}
+
+/* Portfolio design system — quiet surfaces, generous spacing, precise type. */
+:root {
+  --radius: 1rem;
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+  --card: #ffffff;
+  --card-foreground: #1d1d1f;
+  --primary: #0066cc;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f7;
+  --muted: #f5f5f7;
+  --muted-foreground: #6e6e73;
+  --accent: #f0f0f3;
+  --border: #e5e5e7;
+  --ring: #0066cc;
+  --selection-bg: #cce4ff;
+  --selection-fg: #1d1d1f;
+  --surface-soft: #f5f5f7;
+  --header-surface: rgb(255 255 255 / 82%);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.dark {
+  --background: #101012;
+  --foreground: #f5f5f7;
+  --card: #1c1c1e;
+  --card-foreground: #f5f5f7;
+  --primary: #70b6ff;
+  --primary-foreground: #101012;
+  --secondary: #202023;
+  --muted: #202023;
+  --muted-foreground: #a1a1a6;
+  --accent: #29292d;
+  --border: #343438;
+  --ring: #70b6ff;
+  --surface-soft: #171719;
+  --header-surface: rgb(16 16 18 / 82%);
+}
+
+body { letter-spacing: -0.015em; }
+section[id], main[id] { scroll-margin-top: 84px; }
+a, button { -webkit-tap-highlight-color: transparent; }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--ring); outline-offset: 5px; }
+.apple-container { width: min(100% - 48px, 1120px); margin-inline: auto; }
+.apple-section { padding-block: 100px; }
+.apple-section#about { padding-bottom: 48px; }
+.apple-section#tech-stack { padding-top: 48px; }
+.section-soft, .apple-footer { background: var(--surface-soft); }
+.apple-eyebrow { margin-bottom: 18px; font-size: 14px; font-weight: 600; letter-spacing: 0.015em; color: var(--muted-foreground); }
+.apple-heading { font-size: clamp(36px, 5vw, 64px); font-weight: 650; letter-spacing: -0.055em; line-height: 1.06; text-wrap: balance; }
+.section-description { max-width: 650px; margin-top: 24px; font-size: 20px; line-height: 1.5; color: var(--muted-foreground); text-wrap: pretty; }
+.apple-header { position: sticky; top: 0; z-index: 50; background: var(--header-surface); backdrop-filter: blur(24px) saturate(180%); border-bottom: 1px solid var(--border); }
+.apple-mobile-nav { position: absolute; top: 100%; left: 0; width: 100%; height: calc(100dvh - 44px); overflow-y: auto; overscroll-behavior: contain; background: var(--background); }
+.apple-mobile-nav { transform-origin: top; animation: mobile-menu-reveal 600ms cubic-bezier(0.25, 0.8, 0.25, 1) both; }
+.apple-mobile-menu-link { animation: mobile-menu-link-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both; transition: color 150ms ease; }
+@keyframes mobile-menu-reveal { from { clip-path: inset(0 0 100% 0); transform: translateY(-20px); } to { clip-path: inset(0); transform: translateY(0); } }
+@keyframes mobile-menu-link-in { from { opacity: 0; transform: translateY(-32px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .apple-mobile-nav, .apple-mobile-menu-link { animation: none !important; transition: none !important; }
+  .apple-mobile-menu-link { transform: none; }
+}
+.apple-nav-link { font-size: 12px; color: var(--muted-foreground); transition: color 180ms ease; }
+.apple-nav-link:hover, .apple-nav-link[aria-current="page"] { color: var(--foreground); }
+.apple-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 999px; padding: 14px 25px; background: var(--primary); color: var(--primary-foreground); font-size: 15px; font-weight: 500; transition: opacity 180ms ease, transform 180ms ease; }
+.apple-button:hover { opacity: 0.9; transform: translateY(-1px); }
+.apple-button-small { padding: 8px 17px; font-size: 12px; }
+.apple-link { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; font-weight: 500; color: var(--primary); }
+.apple-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+.skip-link { position: absolute; top: -100px; left: 16px; padding: 12px 18px; border-radius: 12px; background: var(--background); z-index: 100; }
+.skip-link:focus { top: 12px; }
+.portfolio-hero { padding-top: 88px; overflow: hidden; background: linear-gradient(var(--background) 65%, var(--surface-soft)); }
+.hero-title { font-size: clamp(42px, 6.8vw, 84px); font-weight: 650; letter-spacing: -0.06em; line-height: 1.05; text-wrap: balance; }
+.hero-title span { color: var(--muted-foreground); }
+.hero-description { margin: 28px auto 0; max-width: 670px; font-size: clamp(18px, 2vw, 22px); line-height: 1.5; color: var(--muted-foreground); text-wrap: pretty; }
+.hero-showcase { position: relative; height: 400px; display: flex; align-items: end; justify-content: center; isolation: isolate; }
+.hero-showcase::before { content: ""; position: absolute; z-index: -2; width: 740px; height: 390px; bottom: -90px; border-radius: 50%; background: radial-gradient(ellipse, #d8e7f8 0%, #e7e5ef 35%, transparent 70%); }
+.dark .hero-showcase::before { opacity: 0.3; }
+.portrait-frame { width: 290px; height: 345px; border-radius: 140px 140px 0 0; overflow: hidden; background: var(--surface-soft); border: 6px solid var(--background); box-shadow: 0 12px 60px rgb(0 0 0 / 8%); }
+.hero-portrait { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.hero-orbit { position: absolute; z-index: -1; width: 620px; height: 280px; border: 1px solid var(--border); border-radius: 50%; bottom: 20px; transform: rotate(-14deg); }
+.orbit-two { transform: rotate(14deg); width: 760px; height: 350px; bottom: -35px; opacity: 0.7; }
+.hero-chip { position: absolute; display: flex; align-items: center; gap: 10px; padding: 18px 22px; border: 1px solid var(--border); border-radius: 20px; background: var(--header-surface); backdrop-filter: blur(20px); box-shadow: 0 10px 35px rgb(0 0 0 / 5%); font-size: 15px; font-weight: 500; }
+.hero-chip svg { color: var(--primary); }
+.chip-code { left: calc(50% - 340px); top: 160px; transform: rotate(-7deg); }
+.chip-ai { right: calc(50% - 325px); top: 75px; transform: rotate(7deg); }
+.hero-status { position: absolute; bottom: 25px; display: flex; align-items: center; gap: 8px; padding: 12px 20px; border: 1px solid var(--border); border-radius: 999px; background: var(--background); box-shadow: 0 5px 20px rgb(0 0 0 / 5%); font-size: 12px; font-weight: 500; }
+.experience-card { padding: 48px; border-radius: 28px; background: var(--surface-soft); }
+.experience-details { border-top: 1px solid var(--border); padding-top: 28px; }
+.experience-details h4 { font-size: 15px; font-weight: 600; }
+.experience-details p { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--muted-foreground); }
+.project-grid, .capability-grid, .foundation-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.project-card { display: flex; flex-direction: column; overflow: hidden; border-radius: 28px; background: var(--card); transition: transform 240ms ease, box-shadow 240ms ease; }
+.project-card:hover { transform: translateY(-5px); box-shadow: 0 16px 45px rgb(0 0 0 / 7%); }
+.project-visual { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; min-height: 280px; overflow: hidden; color: #263951; }
+.visual-health { background: linear-gradient(135deg, #e5eff6, #d0e3e9); }
+.visual-language { background: linear-gradient(135deg, #f0eafb, #ded9ef); color: #514673; }
+.visual-data { background: linear-gradient(135deg, #f5eadc, #efe1cb); color: #705536; }
+.visual-ai { background: linear-gradient(135deg, #e4ede8, #cfe3da); color: #2d5d4c; }
+.project-symbol { position: relative; display: grid; place-items: center; width: 110px; height: 110px; border: 1px solid rgb(255 255 255 / 70%); border-radius: 30px; background: rgb(255 255 255 / 40%); box-shadow: 0 12px 30px rgb(0 0 0 / 5%); transform: rotate(-5deg); }
+.project-visual p { position: relative; font-size: 16px; font-weight: 600; letter-spacing: -0.025em; text-align: center; }
+.visual-ring { position: absolute; width: 330px; height: 330px; border: 1px solid rgb(255 255 255 / 50%); border-radius: 50%; }
+.ring-inner { width: 230px; height: 230px; }
+.project-content { display: flex; flex: 1; flex-direction: column; padding: 32px; }
+.project-category { font-size: 12px; font-weight: 600; color: var(--muted-foreground); margin-bottom: 12px; }
+.project-content h3 { font-size: 25px; font-weight: 600; line-height: 1.15; letter-spacing: -0.035em; text-wrap: balance; }
+.project-description { margin-top: 16px; font-size: 15px; line-height: 1.65; color: var(--muted-foreground); }
+.project-technologies { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 22px; font-size: 11px; font-weight: 500; color: var(--muted-foreground); }
+.capability-card { padding: 36px; border-radius: 24px; background: var(--surface-soft); }
+.capability-icon { color: var(--primary); margin-bottom: 30px; }
+.capability-card h3 { font-size: 25px; line-height: 1.2; font-weight: 600; letter-spacing: -0.035em; }
+.capability-card p { margin-top: 14px; max-width: 340px; font-size: 16px; line-height: 1.6; color: var(--muted-foreground); }
+.capability-card .capability-tools { margin-top: 24px; font-size: 12px; }
+.learning-strip { display: flex; align-items: center; gap: 22px; padding: 30px 36px; border: 1px solid var(--border); border-radius: 24px; }
+.foundation-card { padding: 36px; background: var(--card); border-radius: 24px; }
+.contact-section { padding-block: 120px; }
+.apple-footer { padding-block: 45px 28px; }
+.legacy-hero { text-align: center; background: var(--surface-soft); }
+.legacy-hero h1 { font-size: clamp(40px, 6vw, 72px); letter-spacing: -0.055em; font-weight: 650; }
+.legacy-section svg.pointer-events-none.absolute { display: none !important; }
+.legacy-section .lg\:border { border: 0; border-radius: 24px; background: var(--surface-soft); padding: 32px; }
+.legacy-section h2 { border-bottom: 0; }
+
+@media (min-width: 1100px) { .capability-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .capability-card { padding: 28px; } .capability-card h3 { font-size: 22px; } }
+@media (max-width: 640px) {
+  .apple-container { width: calc(100% - 40px); }
+  .apple-section { padding-block: 64px; }
+  .portfolio-hero { padding-top: 58px; }
+  .hero-title { font-size: clamp(36px, 9vw, 54px); }
+  .hero-description { font-size: 18px; }
+  .hero-showcase { height: 335px; }
+  .portrait-frame { width: 235px; height: 290px; }
+  .hero-chip { padding: 12px; gap: 6px; font-size: 11px; border-radius: 14px; }
+  .hero-chip svg { width: 18px; height: 18px; }
+  .chip-code { left: 0; top: 120px; }
+  .chip-ai { right: 0; top: 45px; }
+  .hero-orbit { width: 380px; height: 210px; }
+  .orbit-two { width: 460px; height: 260px; }
+  .experience-card, .capability-card, .foundation-card, .project-content { padding: 26px; }
+  .project-grid, .capability-grid, .foundation-grid { grid-template-columns: 1fr; gap: 20px; }
+  .project-visual { min-height: 245px; }
+  .section-description { font-size: 18px; }
+  .learning-strip { align-items: start; padding: 24px; gap: 14px; }
+  .contact-section { padding-block: 80px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  main { animation: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .project-card:hover, .apple-button:hover { transform: none; }
 }

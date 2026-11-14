@@ -1,120 +1,41 @@
-import Image from "next/image";
-import { NowPlaying } from "@/components/shared/now-playing";
-import { ThemeToggle } from "@/components/shared/theme-toggle";
-import { DecorIcon, FullWidthDivider } from "@/components/ui/border";
-import { Button } from "@/components/ui/button";
-import { TypographyMuted, TypographySmall } from "@/components/ui/typography";
-import { siteConfig } from "@/lib/config";
 import Link from "next/link";
-import { type ReactNode } from "react";
-import {
-  IconBrandGithubFilled,
-  IconBrandLinkedinFilled,
-  IconBrandDiscordFilled,
-} from "@tabler/icons-react";
-
-const platformIcons: Record<
-  (typeof siteConfig.social)[number]["platform"],
-  ReactNode
-> = {
-  github: <IconBrandGithubFilled aria-hidden="true" />,
-  linkedin: <IconBrandLinkedinFilled aria-hidden="true" />,
-  discord: <IconBrandDiscordFilled aria-hidden="true" />,
-};
-
-const footerNav = [...siteConfig.nav];
+import { siteConfig } from "@/lib/config";
+import { NowPlaying } from "@/components/shared/now-playing";
+import { SocialLogo } from "@/components/shared/social-logo";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export function Footer() {
   return (
-    <footer className="relative mt-auto" aria-label="Site footer">
-      <div className="relative mx-auto flex max-w-5xl flex-col gap-8 px-6 py-12 sm:px-8 lg:px-10 before:pointer-events-none before:absolute before:inset-y-0 before:left-0 before:w-px before:bg-border after:pointer-events-none after:absolute after:inset-y-0 after:right-0 after:w-px after:bg-border">
-        <div aria-hidden="true">
-          <DecorIcon position="top-left" />
-          <DecorIcon position="top-right" />
-          <FullWidthDivider position="top" />
-        </div>
-
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-[1fr_auto]">
-          {/* Left Side */}
-          <div className="flex flex-col gap-4">
-            <Link
-              href="/"
-              aria-label={`${siteConfig.name} — home`}
-            >
-              <img
-                src="/logo.png"
-                alt="Noel Logo"
-                className="h-12 w-12 object-contain"
-              />
-            </Link>
-
-            <TypographyMuted className="max-w-xs text-balance">
-              {siteConfig.description}
-            </TypographyMuted>
-
-            {/* Social Icons */}
-            <nav aria-label="Social links" className="flex gap-2">
-              {siteConfig.social.map((item) => (
-                <Button
-                  key={item.label}
-                  asChild
-                  size="icon-sm"
-                  variant="outline"
-                >
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${item.label} (opens in new tab)`}
-                  >
-                    {platformIcons[item.platform]}
-                  </a>
-                </Button>
-              ))}
-            </nav>
-
-            {/* 🎵 Now Playing */}
-            <NowPlaying />
+    <footer className="apple-footer" aria-label="Site footer">
+      <div className="apple-container">
+        <div className="flex flex-col justify-between gap-8 border-b border-border pb-8 md:flex-row">
+          <div>
+            <Link href="/" className="text-xl font-semibold tracking-tight" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>{siteConfig.name}</Link>
+            <p className="mt-2 text-sm font-medium text-muted-foreground">AI engineering. Thoughtfully built.</p>
+            <div className="mt-4 max-w-full [&>div]:flex-wrap">
+              <NowPlaying />
+            </div>
           </div>
-
-          {/* Right Side */}
-          <nav aria-label="Footer navigation" className="flex flex-col gap-2">
-            <TypographyMuted
-              className="uppercase tracking-widest font-mono mb-1"
-              aria-hidden="true"
-            >
-              Pages
-            </TypographyMuted>
-
-            {footerNav.map(({ href, label }) => (
-              <Link
-                key={href}
-                href={href}
-                className="text-muted-foreground hover:text-foreground transition-colors w-max"
-              >
-                <TypographySmall>{label}</TypographySmall>
-              </Link>
-            ))}
+          <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+            {siteConfig.nav.map((link) => <Link className="apple-nav-link" key={link.href} href={link.href}>{link.label}</Link>)}
           </nav>
         </div>
-
-        <div aria-hidden="true">
-          <FullWidthDivider position="bottom" />
-        </div>
-
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <TypographyMuted
-            className="font-mono"
-            aria-label={`© 2025 to ${new Date().getFullYear()} ${siteConfig.name}. All rights reserved.`}
-          >
-            &copy; 2025 - {new Date().getFullYear()} {siteConfig.name}. All
-            rights reserved.
-          </TypographyMuted>
-
-          <ThemeToggle
-            aria-label="Toggle theme"
-            className="self-start sm:self-auto"
-          />
+        <div className="flex flex-col justify-between gap-4 pt-6 text-xs font-medium text-muted-foreground sm:flex-row">
+          <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
+          <nav aria-label="Social links" className="flex items-center gap-2">
+            {siteConfig.social.map((link) => (
+              <Tooltip key={link.label} delayDuration={200}>
+                <TooltipTrigger asChild>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="flex size-10 items-center justify-center rounded-full text-foreground transition-colors hover:bg-background" aria-label={`${link.label} (opens in a new tab)`}>
+                    <SocialLogo platform={link.platform} className="size-5" aria-hidden="true" focusable="false" />
+                  </a>
+                </TooltipTrigger>
+                <TooltipContent side="top" sideOffset={10} className="rounded-xl px-3.5 py-2 text-xs font-medium shadow-lg">
+                  {link.label}
+                </TooltipContent>
+              </Tooltip>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>

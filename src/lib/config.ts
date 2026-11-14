@@ -1,7 +1,7 @@
 export const siteConfig = {
     name: "Noel Francis D'costa",
     domain: "noeldcosta.com", // change later if needed
-    role: "Data Scientist",
+    role: "AI Engineer",
     email: "noeldcosta36@gmail.com",
     description:
         "I build intelligent systems that turn data into actionable insight and scalable AI solutions, specializing in Python, Machine Learning, Deep Learning, and Generative AI.",
@@ -22,8 +22,6 @@ export const siteConfig = {
         "https://github.com/noeldcosta25/noel-resume/releases/latest/download/resume.pdf",
 
     nav: [
-        { href: "/ml-lab", label: "ML Lab"},
-        { href: "/ai-demo", label: "AI Demo"},
         { href: "/certifications", label: "Certifications"},
         { href: "/resume", label: "Resume" },
     ] as const,

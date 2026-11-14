@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none" className={className} {...props}>
+  {/* Dark background rectangle for contrast if needed, or transparent */}
+  <rect width="500" height="500" fill="#000000" rx="40" />
+  {/* Yellow beam / triangle on top */}
+  <polygon points="0,228 500,0 500,95" fill="#FFE600" />
+  {/* 'E' */}
+  <polygon points="5,252 185,252 185,342 80,342 80,387 175,387 175,462 80,462 80,500 5,500" fill="#2E3440" />
+  {/* 'Y' */}
+  <polygon points="172,252 258,252 305,395 352,252 438,252 348,460 348,500 262,500 262,460" fill="#2E3440" />
+</svg>
